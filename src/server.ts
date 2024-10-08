@@ -1,17 +1,17 @@
 import fastify from 'fastify'
-import { db } from './database'
+
 import { env } from './env'
+import { mealRoutes } from './routes/meal'
+import { userRoutes } from './routes/user'
 
 const app = fastify()
 
-app.get('/hello', async () => {
-  const meal = await db('meal')
-    .insert({
-      name: 'teste',
-    })
-    .returning('*')
+app.register(mealRoutes, {
+  prefix: 'meal', // prefixo para as rotas: /meal
+})
 
-  return meal
+app.register(userRoutes, {
+  prefix: 'user', // prefixo para as rotas: /user
 })
 
 app

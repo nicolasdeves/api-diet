@@ -6,11 +6,17 @@ exports.up = async function (knex) {
     await knex.schema.createTable('meal', (table) => {
         table.increments('id').primary();
         table.text('name').notNullable();
-        table.text('descriptiom').notNullable();
-        table.timestamp('date_time').notNullable();
+        table.text('description').notNullable();
         table.boolean('compliant').notNullable;
-        table.created_at('date_time').defalutTo(knex.fn.now()).notNullable();
+        table.integer('userId').unsigned().notNullable();
+        table.timestamp('created_at').defaultTo(knex.fn.now()).notNullable();
 
+        table
+            .foreign('userId')
+            .references('id')
+            .inTable('user')
+            .onDelete('CASCADE')
+            
     });
 };
 

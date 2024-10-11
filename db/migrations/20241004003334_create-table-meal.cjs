@@ -9,6 +9,7 @@ exports.up = async function (knex) {
         table.text('description').notNullable();
         table.boolean('compliant').notNullable;
         table.integer('userId').unsigned().notNullable();
+        table.uuid('sessionId').unsigned();
         table.timestamp('created_at').defaultTo(knex.fn.now()).notNullable();
 
         table

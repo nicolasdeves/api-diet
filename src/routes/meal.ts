@@ -5,19 +5,19 @@ import { randomUUID } from 'crypto'
 import { checkSessionId } from '../middlewares/check-session-id'
 
 export async function mealRoutes(app: FastifyInstance) {
-  app.get('/',{
-    preHandler: [checkSessionId]
-  },
-  async (request) => {
+  app.get(
+    '/',
+    {
+      preHandler: [checkSessionId],
+    },
+    async (request) => {
+      const { sessionId } = request.cookies
 
-    const { sessionId } = request.cookies
+      const meals = await db('meal').where('sessionId', sessionId).select()
 
-    const meals = await db('meal')
-      .where('sessionId', sessionId)
-      .select()
-
-    return { meals }
-  })
+      return { meals }
+    },
+  )
 
   app.get('/:id', async (request) => {
     const getMealParamsSchema = z.object({

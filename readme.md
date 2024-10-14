@@ -16,6 +16,8 @@ npm i fastify
 
 npm install tsx -D //converte o código para js e roda a aplicação
 
+npm i @fastify/cookie
+
 ### NSLint
 
 npm i eslint@8 @rocketseat/eslint-config -D //instala o lint para padronizar código. Neste caso, utilizei um preset pronto da Rocketseat
@@ -24,9 +26,8 @@ npm install eslint-plugin-import --save-dev
 
 npx eslint . --fix  //verifica o código e corrige-o
 
-coloquei no package-loco para rodar o nslint ` "dev": "npx eslint . --fix && tsx watch src/server.ts" `
 
-`Usar node 20`
+coloquei no package-loco para rodar o nslint ` "dev": "npx eslint . --fix && tsx watch src/server.ts" `
 
 ### Configurando knex sqlite3
 
@@ -55,6 +56,13 @@ coloquei no package-loco para rodar o nslint ` "dev": "npx eslint . --fix && tsx
 
 - Seguir o .env.example para criar um .env
 
+### Vitest
+
+- npm i vitest -D
+
+- npm i supertest -D
+
+- npm i -D @types/supertest
 
 ### Tecnologias utilizadas
 
@@ -62,7 +70,7 @@ coloquei no package-loco para rodar o nslint ` "dev": "npx eslint . --fix && tsx
 
 - TS
 
-- Node
+- Node 20
 
 - NSLint
 
@@ -71,3 +79,5 @@ coloquei no package-loco para rodar o nslint ` "dev": "npx eslint . --fix && tsx
 - Fastify
 
 - Zod
+
+- Testes automatizados

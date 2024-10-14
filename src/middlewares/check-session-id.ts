@@ -1,14 +1,15 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from 'fastify'
 
-export async function checkSessionId(request: FastifyRequest, reply: FastifyReply) {
+export async function checkSessionId(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const sessionId = request.cookies.sessionId
 
-    const sessionId = request.cookies.sessionId
-    
-    if (!sessionId) {
-        return reply.status(401).send({
-            error: 'Unauthorized',
-            message: 'You must be logged in to access this route',
-        })
-    }
-
+  if (!sessionId) {
+    return reply.status(401).send({
+      error: 'Unauthorized',
+      message: 'You must be logged in to access this route',
+    })
+  }
 }

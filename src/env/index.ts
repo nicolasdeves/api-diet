@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 // criar o formato do objeto do env
 const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production']).default('development'),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   DATABASE_URL: z.string(),
   PORT: z.string().transform(Number),
 })

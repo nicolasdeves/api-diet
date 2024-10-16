@@ -64,4 +64,38 @@ export async function mealRoutes(app: FastifyInstance) {
 
     return reply.status(201).send()
   })
+
+  app.put('/:id', async (request, reply) => {
+    const createMealParamsSchema = z.object({
+      id: z.string()
+    })
+
+    const createMealBodySchema = z.object({
+      name: z.string().optional(),
+      description: z.string().optional(),
+      compliant: z.boolean().optional(),
+      userId: z.number().optional(),
+    })
+
+    const { id } = createMealParamsSchema.parse(request.params)
+
+    const { name, description, compliant, userId } = createMealBodySchema.parse(
+      request.body,
+    )
+
+    const meal = await db('meal').where('id', id).first()
+
+    await db('meal')
+      .where('id', id)
+      .update({
+        name: name || meal.name,
+        description: description || meal.description,
+        compliant: compliant || meal.compliant,
+        userId: userId || meal.userId,
+        sessionId: meal.sessionId,
+        createdAt: meal.createdAt,
+      })
+
+    return reply.status(204).send()
+  })
 }

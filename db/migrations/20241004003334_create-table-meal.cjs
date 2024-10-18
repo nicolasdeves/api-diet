@@ -10,7 +10,8 @@ exports.up = async function (knex) {
         table.boolean('compliant').notNullable;
         table.integer('userId').unsigned().notNullable();
         table.uuid('sessionId').unsigned();
-        table.timestamp('created_at').defaultTo(knex.fn.now()).notNullable();
+        table.timestamp('createdAt').defaultTo(knex.fn.now()).notNullable();
+        table.timestamp('updatedAt').defaultTo(null).nullable();
 
         table
             .foreign('userId')

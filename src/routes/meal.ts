@@ -1,8 +1,10 @@
 import { FastifyInstance } from 'fastify'
 import { db } from '../database'
-import { z } from 'zod'
+import { number, z } from 'zod'
 import { randomUUID } from 'crypto'
 import { checkSessionId } from '../middlewares/check-session-id'
+import { getCurrentDate } from '../util/dateUtil'
+
 
 export async function mealRoutes(app: FastifyInstance) {
   app.get(
@@ -66,8 +68,9 @@ export async function mealRoutes(app: FastifyInstance) {
   })
 
   app.put('/:id', async (request, reply) => {
+
     const createMealParamsSchema = z.object({
-      id: z.string()
+      id: z.string(),
     })
 
     const createMealBodySchema = z.object({
@@ -94,7 +97,23 @@ export async function mealRoutes(app: FastifyInstance) {
         userId: userId || meal.userId,
         sessionId: meal.sessionId,
         createdAt: meal.createdAt,
+        updatedAt: getCurrentDate(),
       })
+
+    return reply.status(204).send()
+  })
+
+  app.delete('/:id', async (request, reply) => {
+
+    const createMealParamsSchema = z.object({
+      id: z.string()
+    })
+
+    const { id } = createMealParamsSchema.parse(request.params)
+
+    await db('meal')
+      .where('id', id)
+      .delete()
 
     return reply.status(204).send()
   })

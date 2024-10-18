@@ -1,21 +1,28 @@
-import { test, beforeAll, afterAll } from 'vitest'
+import { test, beforeAll, afterAll, describe, beforeEach } from 'vitest'
 import supertest from 'supertest'
 import { app } from '../app'
+import { execSync } from 'node:child_process'
 
-beforeAll(async () => {
+describe('User routes', () => {
+  beforeAll(async () => {
     await app.ready()
-})
+    execSync('knex migrate:latest')
 
-afterAll(async () => {
+  })
+
+  afterAll(async () => {
     app.close()
-})
+  })
 
-test('create a new user', async() => {
+  beforeEach(() => {
+  })
+
+  test('create a new user', async () => {
     await supertest(app.server)
-        .post('/user')
-        .send({
-            name: 'Name Test'
-        })
-        .expect(201)
+      .post('/user')
+      .send({
+        name: 'Name Test',
+      })
+      .expect(201)
+  })
 })
-

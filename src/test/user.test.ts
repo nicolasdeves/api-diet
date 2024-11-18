@@ -7,15 +7,13 @@ describe('User routes', () => {
   beforeAll(async () => {
     await app.ready()
     execSync('knex migrate:latest')
-
   })
 
   afterAll(async () => {
     app.close()
   })
 
-  beforeEach(() => {
-  })
+  beforeEach(() => {})
 
   test('create a new user', async () => {
     await supertest(app.server)

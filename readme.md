@@ -26,6 +26,10 @@ npm install eslint-plugin-import --save-dev
 
 npx eslint . --fix  //verifica o código e corrige-o
 
+### TSUP
+
+- npm i tsup -D
+
 
 coloquei no package-loco para rodar o nslint ` "dev": "npx eslint . --fix && tsx watch src/server.ts" `
 
@@ -79,5 +83,7 @@ coloquei no package-loco para rodar o nslint ` "dev": "npx eslint . --fix && tsx
 - Fastify
 
 - Zod
+
+- TSUp
 
 - Testes automatizados

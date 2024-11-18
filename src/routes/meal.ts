@@ -1,10 +1,9 @@
 import { FastifyInstance } from 'fastify'
 import { db } from '../database'
-import { number, z } from 'zod'
+import { z } from 'zod'
 import { randomUUID } from 'crypto'
 import { checkSessionId } from '../middlewares/check-session-id'
 import { getCurrentDate } from '../util/dateUtil'
-
 
 export async function mealRoutes(app: FastifyInstance) {
   app.get(
@@ -31,6 +30,12 @@ export async function mealRoutes(app: FastifyInstance) {
     const meal = await db('meal').where('id', id).first()
 
     return { meal }
+  })
+
+  app.get('/quantity', async () => {
+    const quantity = await db('meal').count('id', { as: 'quantity' }).first()
+
+    return { quantity }
   })
 
   app.post('/', async (request, reply) => {
@@ -68,7 +73,6 @@ export async function mealRoutes(app: FastifyInstance) {
   })
 
   app.put('/:id', async (request, reply) => {
-
     const createMealParamsSchema = z.object({
       id: z.string(),
     })
@@ -104,16 +108,13 @@ export async function mealRoutes(app: FastifyInstance) {
   })
 
   app.delete('/:id', async (request, reply) => {
-
     const createMealParamsSchema = z.object({
-      id: z.string()
+      id: z.string(),
     })
 
     const { id } = createMealParamsSchema.parse(request.params)
 
-    await db('meal')
-      .where('id', id)
-      .delete()
+    await db('meal').where('id', id).delete()
 
     return reply.status(204).send()
   })
